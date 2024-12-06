@@ -38,7 +38,6 @@ public class MemoController {
      */
     @PostMapping// 요청(Controller)
     public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto dto) {
-
         // ServiceLayer 호출 및 응답
         return new ResponseEntity<>(memoService.saveMemo(dto), HttpStatus.CREATED);
     }

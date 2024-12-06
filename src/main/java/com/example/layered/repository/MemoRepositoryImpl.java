@@ -15,7 +15,7 @@ import java.util.Map;
  */
 
 @Repository
-public class MemoRepositoryimpl implements MemoRepository{
+public class MemoRepositoryImpl implements MemoRepository{
 
     private final Map<Long, Memo> memoList = new HashMap<>();
 
