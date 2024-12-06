@@ -6,13 +6,11 @@ import com.example.layered.entity.Memo;
 import com.example.layered.service.MemoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController // @Controller + @ResponseBody
@@ -41,5 +39,17 @@ public class MemoController {
         // ServiceLayer 호출 및 응답
         return new ResponseEntity<>(memoService.saveMemo(dto), HttpStatus.CREATED);
     }
+
+    /**
+     * 메모 전체 조회 API
+     * @return : {@link List<MemoResponseDto>} JSON 응답
+     */
+    @GetMapping
+    public List<MemoResponseDto> findAllMemos() {
+
+        // 조회 요청이 들어오면 memoService에 넘겨줌
+        return memoService.findAllMemos();
+    }
+
 
 }
