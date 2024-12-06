@@ -14,24 +14,29 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestController // @Controller + @ResponseBody
 @RequestMapping("/memos")
 public class MemoController {
 
+    // 데이터베이스(Repository)
     private final Map<Long, Memo> memoList = new HashMap<>();
 
+    // 1. 요청(Controller)
     @PostMapping
     public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto dto) {
 
-        // 식별자가 1씩 증가하도록 만듦
+        // 2. 비지니스 로직
+        // MemoId 식별자 계산(Repository)
         Long memoId = memoList.isEmpty() ? 1 : Collections.max(memoList.keySet()) + 1;
 
-        // 요청받은 데이터로 Memo 객체 생성
+        // 요청받은 데이터로 Memo 객체 생성(Service)
         Memo memo = new Memo(memoId, dto.getTitle(), dto.getContents());
 
-        // Inmemory DB에 Memo 메모
+        // 3. 데이터베이스 상호작용
+        // Inmemory DB에 Memo 저장(Repository)
         memoList.put(memoId, memo);
 
+        // 4. 응답(Controller)
         return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.CREATED);
     }
 
