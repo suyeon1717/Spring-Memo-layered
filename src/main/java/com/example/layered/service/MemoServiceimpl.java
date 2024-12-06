@@ -3,6 +3,8 @@ package com.example.layered.service;
 
 import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
+import com.example.layered.entity.Memo;
+import com.example.layered.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,12 +17,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemoServiceimpl implements MemoService{
 
+    // Repository Layer 접근
+    private final MemoRepository memoRepository;
+
+    // Repository 생성자 주입
+    public MemoServiceimpl(MemoRepository memoRepository) {
+        this.memoRepository = memoRepository;
+    }
+
     @Override
     public MemoResponseDto saveMemo(MemoRequestDto dto) {
 
+        // 요청받은 데이터로 MEMO 객체 생성 ID 없음
+        Memo memo = new Memo(dto.getTitle(), dto.getContents());
 
+        // DB 저장 (Repository)
+        Memo savedMemo = memoRepository.saveMemo(memo);
 
-
-        return null;
+        return new MemoResponseDto(savedMemo);
     }
 }
