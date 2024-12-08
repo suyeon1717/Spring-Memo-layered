@@ -73,9 +73,25 @@ public class MemoController {
     @PutMapping("/{id}")
     public ResponseEntity<MemoResponseDto> updateMemo(
             @PathVariable Long id,
-            @RequestBody MemoRequestDto requestDto
+            @RequestBody MemoRequestDto dto
     ) {
-        return new ResponseEntity<>(memoService.updateMemo(id, requestDto.getTitle(), requestDto.getContents()), HttpStatus.OK);
+        return new ResponseEntity<>(memoService.updateMemo(id, dto.getTitle(), dto.getContents()), HttpStatus.OK);
+    }
+
+    /**
+     * 메모 제목 수정 API
+     * @param id 식별자
+     * @param : {@link MemoRequestDto} 메모 수정 요청 객체
+     * @return : {@link ResponseEntity<MemoResponseDto>} JSON 응답
+     * @exception ResponseStatusException 요청 필수값이 없는 경우 400 Bad Request, 식별자로 조회된 Memo가 없는 경우 404 Not Found
+     */
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateTitle(
+            @PathVariable Long id,
+            @RequestBody MemoRequestDto dto
+    ) {
+        return new ResponseEntity<>(memoService.updateTitle(id, dto.getTitle(), dto.getContents()), HttpStatus.OK);
     }
 
 

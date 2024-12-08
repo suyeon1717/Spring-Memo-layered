@@ -14,4 +14,6 @@ public interface MemoService {
     MemoResponseDto findMemoById(Long id); // 메모 단건 조회
 
     MemoResponseDto updateMemo(Long id, String title, String contents); // 메모 수정
+
+    MemoResponseDto updateTitle(Long id, String title, String contents); // 메모 제목 수정
 }
