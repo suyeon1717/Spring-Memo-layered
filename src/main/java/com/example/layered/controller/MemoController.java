@@ -7,6 +7,7 @@ import com.example.layered.service.MemoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,6 +60,22 @@ public class MemoController {
     @GetMapping("/{id}")
     public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) { //속성값 생략
         return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
+    }
+
+    /**
+     * 메모 전체 수정 API
+     * @param id 식별자
+     * @param : {@link MemoRequestDto} 메모 수정 요청 객체
+     * @return : {@link ResponseEntity<MemoResponseDto>} JSON 응답
+     * @exception ResponseStatusException 요청 필수값이 없는 경우 400 Bad Request, 식별자로 조회된 Memo가 없는 경우 404 Not Found
+     */
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateMemo(
+            @PathVariable Long id,
+            @RequestBody MemoRequestDto requestDto
+    ) {
+        return new ResponseEntity<>(memoService.updateMemo(id, requestDto.getTitle(), requestDto.getContents()), HttpStatus.OK);
     }
 
 
