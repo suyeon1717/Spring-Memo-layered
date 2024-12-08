@@ -94,6 +94,22 @@ public class MemoController {
         return new ResponseEntity<>(memoService.updateTitle(id, dto.getTitle(), dto.getContents()), HttpStatus.OK);
     }
 
+    /**
+     * 메모 삭제 API
+     * @param id 식별자
+     * @return {@link ResponseEntity<Void>} 성공시 Data 없이 200OK 상태코드만 응답.
+     * @exception ResponseStatusException 식별자로 조회된 Memo가 없는 경우 404 Not Found
+     */
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletememo(
+            @PathVariable Long id
+    ) {
+        memoService.deleteMemo(id);
+        //성공한 경우
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 
