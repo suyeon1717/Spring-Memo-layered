@@ -5,8 +5,11 @@ import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import com.example.layered.repository.MemoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 /**
@@ -50,4 +53,22 @@ public class MemoServiceImpl implements MemoService {
         // 바로 return 해도 됨
         // return memoRepository.findAllMemos();
     }
+
+    @Override
+    public MemoResponseDto findMemoById(Long id) {
+
+        Memo memo = memoRepository.findMemoById(id);
+
+        // 식별자의 Memo가 없다면?
+        // 아래 코드 사용 불가.
+        // if (memo == null) {
+        //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // }
+        if (memo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id= " + id);
+        }
+        return new MemoResponseDto(memo);
+    }
+
+
 }

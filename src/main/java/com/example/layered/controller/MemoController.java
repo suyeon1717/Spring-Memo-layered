@@ -51,5 +51,18 @@ public class MemoController {
         return memoService.findAllMemos();
     }
 
+    /**
+     * 메모 단건 조회 API
+     * @param id 식별자
+     * @return : {@link ResponseEntity<MemoResponseDto>} JSON 응답
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) { //속성값 생략
+        return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
+    }
+
+
+
+
 
 }
